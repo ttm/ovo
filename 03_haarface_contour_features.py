@@ -27,7 +27,7 @@ while(True):
       roi_color = frame[y:y+h, x:x+w]
       
       # Convert to binary by threshold
-      ret,thresh = cv2.threshold(roi_gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+      ret,thresh = cv2.threshold(roi_gray,0,255,0,1)
       # Find contours
       contours,hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
       
@@ -45,14 +45,14 @@ while(True):
           # Some features (area, perimeter, angle)
           area = cv2.contourArea(cnt)
           perimeter = cv2.arcLength(cnt,True)
-          #(x,y),(MA,ma),angle = cv2.fitEllipse(cnt)
+          #angle = '?'
+          #if len(cnt) >= 5:
+          #  (x,y),(MA,ma),angle = cv2.fitEllipse(cnt)
           # Create a mask to make it possible to find its mean value of color
-          mask = np.zeros(roi_gray.shape,np.uint8)
-
-          pixelpoints = np.transpose(np.nonzero(mask))
-          
-          mean_val = cv2.mean(roi_gray, mask = mask)
-          print 'Centroid: (%s,%s). Area: %d. Perimeter: %d. Mean color: %s' % (centroid_x, centroid_y, area, perimeter, mean_val)
+          #mask = np.zeros(roi_gray.shape,np.uint8)
+          #pixelpoints = np.transpose(np.nonzero(mask))
+          #mean_val = cv2.mean(roi_gray, mask = mask)
+          print 'Centroid: (%s,%s). Area: %d. Perimeter: %d.' % (centroid_x, centroid_y, area, perimeter)
 
     # Display the resulting frame
     cv2.imshow('frame', frame)
